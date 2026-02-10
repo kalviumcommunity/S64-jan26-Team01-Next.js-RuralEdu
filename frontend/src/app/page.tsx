@@ -52,7 +52,11 @@ export default function Home() {
                   height={320}
                   alt="Student"
                   className="shadow-xl border-2 border-white"
-                  style={{ clipPath: "polygon(49% 3%, 95% 28%, 77% 93%, 20% 93%, 2% 28%)" }}
+                  style={{
+                    clipPath: "polygon(49% 3%, 95% 28%, 77% 93%, 20% 93%, 2% 28%)",
+                    width: 'auto',
+                    height: 'auto'
+                  }}
                   priority
                 />
               </div>
@@ -83,27 +87,48 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-10">Why RuralEdu works</h2>
             <div className="grid gap-10 md:grid-cols-3 text-left">
               <div className="flex flex-col items-center md:items-start">
-                <Image src="/personalized.png" alt="Personalized learning" width={96} height={96} className="mb-4" />
+                <Image
+                  src="/personalized.png"
+                  alt="Personalized learning"
+                  width={96}
+                  height={96}
+                  className="mb-4"
+                  style={{ width: 'auto', height: 'auto' }}
+                />
                 <h3 className="text-xl font-semibold mb-2">Personalized learning</h3>
                 <p className="text-sm text-neutral-700 leading-relaxed">
                   Learners practice at their own pace, filling gaps first and then moving ahead when they are ready, even when the connection is patchy.
                 </p>
               </div>
               <div className="flex flex-col items-center md:items-start">
-                <Image src="/trusted.png" alt="Trusted content" width={96} height={96} className="mb-4" />
+                <Image
+                  src="/trusted.png"
+                  alt="Trusted content"
+                  width={96}
+                  height={96}
+                  className="mb-4"
+                  style={{ width: 'auto', height: 'auto' }}
+                />
                 <h3 className="text-xl font-semibold mb-2">Trusted content</h3>
                 <p className="text-sm text-neutral-700 leading-relaxed">
                   Built with teachers, RuralEdu lessons stay aligned to curriculum and are optimized to load fast on low-bandwidth connections.
                 </p>
               </div>
               <div className="flex flex-col items-center md:items-start">
-                <Image src="/empower.png" alt="Tools to empower teachers" width={96} height={96} className="mb-4" />
+                <Image
+                  src="/empower.png"
+                  alt="Tools to empower teachers"
+                  width={96}
+                  height={96}
+                  className="mb-4"
+                  style={{ width: 'auto', height: 'auto' }}
+                />
                 <h3 className="text-xl font-semibold mb-2">Tools to empower teachers</h3>
                 <p className="text-sm text-neutral-700 leading-relaxed">
                   Simple dashboards help teachers spot where students are stuck and assign right-sized offline-first practice, without any heavy UI.
                 </p>
               </div>
- 
+
             </div>
           </div>
         </section>
@@ -119,6 +144,7 @@ export default function Home() {
                 width={420}
                 height={420}
                 className="max-w-full h-auto"
+                style={{ width: 'auto', height: 'auto' }}
                 priority={false}
               />
             </div>
@@ -182,6 +208,7 @@ export default function Home() {
                 width={420}
                 height={260}
                 className="max-w-full h-auto"
+                style={{ width: 'auto', height: 'auto' }}
                 priority={false}
               />
             </div>
@@ -202,6 +229,7 @@ export default function Home() {
                     width={64}
                     height={64}
                     className="w-full h-full object-cover"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
                 <div className="text-xs text-neutral-600">

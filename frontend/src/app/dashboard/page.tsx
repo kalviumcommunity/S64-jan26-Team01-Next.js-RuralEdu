@@ -1,15 +1,28 @@
+import { auth } from "@/auth";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export default async function DashboardPage() {
-    const session = await getSession();
+    const nextAuthSession = await auth();
+    const customSession = await getSession();
 
-    if (!session) {
+    const user = nextAuthSession?.user || customSession?.user;
+
+    if (!user) {
         redirect("/login");
     }
 
-    const { user } = session;
+    if (!user.role) {
+        redirect("/onboarding");
+    }
+
+    if (user.role === "TEACHER") {
+        redirect("/teacher-dashboard");
+    }
+
+    // Handle name differences (Google/NextAuth uses 'name', Legacy uses 'fullName' or 'name')
+    const displayName = user.name || user.fullName || "Learner";
 
     return (
         <div className="min-h-screen bg-[#f8fbff] text-gray-800">
@@ -23,11 +36,11 @@ export default async function DashboardPage() {
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="hidden md:block text-right">
-                        <p className="text-sm font-bold text-gray-800">{user.fullName}</p>
-                        <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">{user.role}</p>
+                        <p className="text-sm font-bold text-gray-800">{displayName}</p>
+                        <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold">{user.role || "LEARNER"}</p>
                     </div>
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-[#18659e] font-bold border-2 border-white shadow-sm">
-                        {user.fullName?.[0]?.toUpperCase()}
+                        {displayName?.[0]?.toUpperCase()}
                     </div>
                 </div>
             </nav>
@@ -35,7 +48,7 @@ export default async function DashboardPage() {
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-[#18659e] to-[#2a86c9] text-white p-8 md:p-12 mb-8">
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight">Welcome back,<br />{user.fullName || "Learner"}! 👋</h1>
+                    <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight">Welcome back,<br />{displayName}! 👋</h1>
                     <p className="text-blue-100 text-lg md:text-xl font-medium max-w-2xl">
                         You're doing great. You've completed 0 courses and have a 1-day streak! Keep going.
                     </p>
