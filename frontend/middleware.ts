@@ -1,22 +1,22 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { jwtVerify } from 'jose';
+import { auth } from "@/auth";
 
-export async function middleware(req: NextRequest) {
-    const session = req.cookies.get('session')?.value;
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'secret');
+export default auth((req) => {
+    const isLoggedIn = !!req.auth || !!req.cookies.get("session");
+    const isOnDashboard = req.nextUrl.pathname.startsWith('/dashboard');
 
-    if (!session) {
-        return NextResponse.redirect(new URL('/login', req.url));
+    if (isOnDashboard) {
+        if (isLoggedIn) return;
+        return Response.redirect(new URL('/login', req.nextUrl));
+    } else if (isLoggedIn) {
+        // If user is logged in and tries to access login/signup, redirect to dashboard
+        /*
+        const isOnAuth = req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/signup');
+        if (isOnAuth) {
+             return Response.redirect(new URL('/dashboard', req.nextUrl));
+        }
+        */
     }
-
-    try {
-        await jwtVerify(session, secret);
-        return NextResponse.next();
-    } catch (error) {
-        return NextResponse.redirect(new URL('/login', req.url));
-    }
-}
+});
 
 export const config = {
     matcher: ['/dashboard/:path*', '/home/:path*'],

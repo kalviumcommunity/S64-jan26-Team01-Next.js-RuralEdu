@@ -2,11 +2,14 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
 
 function DetailsContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const dob = searchParams.get("dob");
+    const roleParam = searchParams.get("role");
+    const role = roleParam === "TEACHER" ? "TEACHER" : "LEARNER";
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,7 +30,7 @@ function DetailsContent() {
                     fullName,
                     email,
                     password,
-                    role: "LEARNER",
+                    role,
                     dateOfBirth: dob,
                 }),
             });
@@ -43,7 +46,11 @@ function DetailsContent() {
                 });
 
                 if (loginRes.ok) {
-                    router.push("/dashboard");
+                    if (role === "TEACHER") {
+                        router.push("/teacher-dashboard");
+                    } else {
+                        router.push("/dashboard");
+                    }
                 } else {
                     router.push("/login?message=Signup successful! Please log in.");
                 }
@@ -67,7 +74,9 @@ function DetailsContent() {
                     ← Back
                 </button>
 
-                <h1 className="text-3xl font-extrabold text-[#18659e] mb-2 text-center">Create Account</h1>
+                <h1 className="text-3xl font-extrabold text-[#18659e] mb-2 text-center">
+                    {role === "TEACHER" ? "Create Teacher Account" : "Create Account"}
+                </h1>
                 <p className="text-gray-500 mb-8 text-center">Enter your details to get started</p>
 
                 {error && (
@@ -124,6 +133,17 @@ function DetailsContent() {
                         {isLoading ? "Creating Account..." : "Sign Up"}
                     </button>
                 </form>
+
+                <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-100"></span>
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-white px-4 text-gray-400 font-medium">Or continue with</span>
+                    </div>
+                </div>
+
+                <GoogleLoginButton text={role === "TEACHER" ? "Sign up as Teacher with Google" : "Sign up with Google"} />
 
                 <p className="text-center mt-6 text-gray-500 text-sm">
                     By signing up, you agree to our{" "}

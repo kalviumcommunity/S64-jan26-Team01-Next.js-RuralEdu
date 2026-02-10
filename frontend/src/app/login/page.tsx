@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
 
 function LoginContent() {
     const router = useRouter();
@@ -67,6 +68,7 @@ function LoginContent() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full p-4 rounded-xl border-2 border-gray-100 focus:border-[#18659e] focus:outline-none transition-all"
+                            suppressHydrationWarning
                         />
                     </div>
 
@@ -82,6 +84,7 @@ function LoginContent() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full p-4 rounded-xl border-2 border-gray-100 focus:border-[#18659e] focus:outline-none transition-all"
+                            suppressHydrationWarning
                         />
                     </div>
 
@@ -106,13 +109,7 @@ function LoginContent() {
                     </div>
                 </div>
 
-                <button
-                    onClick={() => { }} // Simulation
-                    className="w-full py-4 rounded-2xl border-2 border-gray-100 font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all"
-                >
-                    <img src="https://img.icons8.com/color/48/google-logo.png" className="w-5 h-5" alt="Google" />
-                    Google
-                </button>
+                <GoogleLoginButton />
 
                 <p className="text-center mt-8 text-gray-500 text-sm">
                     Don't have an account?{" "}

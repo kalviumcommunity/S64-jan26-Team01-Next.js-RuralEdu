@@ -34,9 +34,9 @@ export async function POST(request: Request) {
             data: {
                 email,
                 password: hashedPassword,
-                fullName,
+                name: fullName, // Map fullName to name
                 role,
-                dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+                dateOfBirth: dateOfBirth ? String(dateOfBirth) : null,
             },
         });
 
